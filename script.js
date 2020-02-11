@@ -6,17 +6,31 @@ var colors = [
     "rgb(0, 0, 0)",
     "rgb(255, 255, 0)"
 ]
-
-generateNewColors()
-
 var squares = document.querySelectorAll(".squares");
 var colorDisplay = document.querySelector("#colorDisplay");
+var h1 = document.querySelector("h1");
+var message = document.querySelector("#message");
+var pickedColor;
 
-var pickedColor = pickColor();
-colorDisplay.textContent = pickedColor;
+run();
 
-setSquaresColor(squares, colors);
-addEventListeners(squares, pickedColor);
+var resetButton = document.getElementById("resetButton");
+resetButton.addEventListener("click", function () {
+    generateNewColors() //has to be before pickColor();
+    pickedColor = pickColor();
+    colorDisplay.textContent = pickedColor;
+
+    setSquaresColor(squares, colors);
+});
+
+function run() {
+    generateNewColors() //has to be before pickColor();
+    pickedColor = pickColor();
+    colorDisplay.textContent = pickedColor;
+
+    setSquaresColor(squares, colors);
+    addEventListeners();
+}
 
 function setSquaresColor(squares, colors) {
     for (i = 0; i < squares.length; i++) {
@@ -24,13 +38,16 @@ function setSquaresColor(squares, colors) {
     }
 }
 
-function addEventListeners(squares, pickedColor) {
+function addEventListeners() {
     for (i = 0; i < squares.length; i++) {
         squares[i].addEventListener("click", function () {
             var clickedColor = this.style.backgroundColor;
             if (clickedColor === pickedColor) {
-                victoryChangeColors(squares, pickedColor);
+                victoryChangeColors(pickedColor);
+                h1.style.backgroundColor = pickedColor;
+                message.innerHTML = "Correct!";
             } else {
+                message.innerHTML = "Try again";
                 this.style.backgroundColor = "#232323";
             }
         });
@@ -57,7 +74,7 @@ function generateNewColors() {
     }
 }
 
-function victoryChangeColors(squares, rightColor) {
+function victoryChangeColors(rightColor) {
     for (i = 0; i < squares.length; i++) {
         squares[i].style.backgroundColor = rightColor;
     }
