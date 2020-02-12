@@ -30,3 +30,8 @@ h2 {
     background-color: burlywood;
     border-radius: 20px;
 }
+
+.selected {
+	color: white;
+	background: steelblue;
+}
