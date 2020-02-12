@@ -25,7 +25,6 @@ function run() {
 resetButton.addEventListener("click", function () {
     generateNewColors(numSquares) //has to be before pickColor();
     pickColor();
-
     setSquaresColors();
     h1.style.backgroundColor = "#232323";
 });
@@ -34,15 +33,10 @@ easyBtn.addEventListener("click", function () {
     hardBtn.classList.remove("selected");
     easyBtn.classList.add("selected");
     numSquares = 3;
-    generateNewColors(num);
+    generateNewColors(numSquares);
     pickColor();
-    for (var i = 0; i < squares.length; i++) {
-        if (colors[i]) {
-            squares[i].style.background = colors[i];
-        } else {
-            squares[i].style.display = "none";
-        }
-    }
+    setSquaresColors();
+    h1.style.backgroundColor = "#232323";
 });
 
 hardBtn.addEventListener("click", function () {
@@ -51,10 +45,8 @@ hardBtn.addEventListener("click", function () {
     numSquares = 6;
     generateNewColors(numSquares);
     pickColor();
-    for (var i = 0; i < squares.length; i++) {
-        squares[i].style.background = colors[i];
-        squares[i].style.display = "block";
-    }
+    setSquaresColors();
+    h1.style.backgroundColor = "#232323";
 });
 
 function setSquaresColors() {
