@@ -15,23 +15,27 @@ var modeButtons = document.querySelectorAll(".mode");
 
 run();
 
+function run() {
+    generateNewColors(numSquares) //has to be before pickColor();
+    pickColor();
+    setSquaresColors();
+    setupSquares();
+}
+
 resetButton.addEventListener("click", function () {
     generateNewColors(numSquares) //has to be before pickColor();
-    pickedColor = pickColor();
-    colorDisplay.textContent = pickedColor;
+    pickColor();
 
     setSquaresColors();
     h1.style.backgroundColor = "#232323";
-    message.innerHTML = "";
 });
 
 easyBtn.addEventListener("click", function () {
     hardBtn.classList.remove("selected");
     easyBtn.classList.add("selected");
-    generateNewColors(3);
-    message.innerHTML = "";
-    pickedColor = pickedColor();
-    colorDisplay.textContent = pickedColor;
+    numSquares = 3;
+    generateNewColors(num);
+    pickColor();
     for (var i = 0; i < squares.length; i++) {
         if (colors[i]) {
             squares[i].style.background = colors[i];
@@ -44,31 +48,19 @@ easyBtn.addEventListener("click", function () {
 hardBtn.addEventListener("click", function () {
     hardBtn.classList.add("selected");
     easyBtn.classList.remove("selected");
-    generateNewColors(6);
-    pickedColor = pickedColor();
-    colorDisplay.textContent = pickedColor;
-    message.innerHTML = "";
+    numSquares = 6;
+    generateNewColors(numSquares);
+    pickColor();
     for (var i = 0; i < squares.length; i++) {
         squares[i].style.background = colors[i];
         squares[i].style.display = "block";
     }
 });
 
-function run() {
-    generateNewColors(numSquares) //has to be before pickColor();
-    pickedColor = pickColor();
-    colorDisplay.textContent = pickedColor;
-
-    setSquaresColors();
-    setupSquares();
-}
-
 function setSquaresColors() {
     generateNewColors(numSquares);
-    pickedColor = pickColor();
-    colorDisplay.textContent = pickedColor;
+    pickColor();
     resetButton.textContent = "New Colors";
-    message.textContent = "";
 
     for (var i = 0; i < squares.length; i++) {
         if(colors[i]) { //check if colors[i] is empty
@@ -99,7 +91,9 @@ function setupSquares() {
 function pickColor() {
     //if length=6 pick between 0 and 5; if 3 between 0 and 2 
     var randomNumber = Math.floor(Math.random() * colors.length);
-    return colors[randomNumber];
+    pickedColor = colors[randomNumber];
+    colorDisplay.textContent = pickedColor;
+    message.innerHTML = "";
 }
 
 function generateRGB() {
