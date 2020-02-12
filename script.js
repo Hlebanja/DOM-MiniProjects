@@ -1,22 +1,22 @@
-var colors = [
-    "rgb(255, 0, 0)",
-    "rgb(0, 255, 0)",
-    "rgb(0, 0, 255)",
-    "rgb(255, 255, 255)",
-    "rgb(0, 0, 0)",
-    "rgb(255, 255, 0)"
-]
+var numSquares = 6;
+var colors = []
+var pickedColor;
+
 var squares = document.querySelectorAll(".squares");
 var colorDisplay = document.querySelector("#colorDisplay");
-var h1 = document.querySelector("h1");
 var message = document.querySelector("#message");
-var pickedColor;
+var h1 = document.querySelector("h1");
+
+var resetButton = document.querySelector("#reset");
+var modeButtons = document.querySelectorAll(".mode");
+
+
 
 run();
 
 var resetButton = document.getElementById("resetButton");
 resetButton.addEventListener("click", function () {
-    generateNewColors() //has to be before pickColor();
+    generateNewColors(numSquares) //has to be before pickColor();
     pickedColor = pickColor();
     colorDisplay.textContent = pickedColor;
 
@@ -25,7 +25,7 @@ resetButton.addEventListener("click", function () {
 });
 
 function run() {
-    generateNewColors() //has to be before pickColor();
+    generateNewColors(numSquares) //has to be before pickColor();
     pickedColor = pickColor();
     colorDisplay.textContent = pickedColor;
 
@@ -57,7 +57,7 @@ function addEventListeners() {
 
 function pickColor() {
     //if length=6 pick between 0 and 5; if 3 between 0 and 2 
-    randomNumber = Math.floor(Math.random() * colors.length);
+    var randomNumber = Math.floor(Math.random() * colors.length);
     return colors[randomNumber];
 }
 
@@ -69,10 +69,12 @@ function generateRGB() {
     return rgbString;
 }
 
-function generateNewColors() {
-    for (i = 0; i < colors.length; i++) {
-        colors[i] = generateRGB();
+function generateNewColors(length) {
+    var arr = [];
+    for (i = 0; i < length - 1; i++) {
+        arr.push(generateRGB());
     }
+    colors = arr;
 }
 
 function victoryChangeColors(rightColor) {
