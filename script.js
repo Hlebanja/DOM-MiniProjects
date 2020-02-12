@@ -20,14 +20,16 @@ resetButton.addEventListener("click", function () {
     pickedColor = pickColor();
     colorDisplay.textContent = pickedColor;
 
-    setSquaresColor();
+    setSquaresColors();
     h1.style.backgroundColor = "#232323";
+    message.innerHTML = "";
 });
 
 easyBtn.addEventListener("click", function () {
     hardBtn.classList.remove("selected");
     easyBtn.classList.add("selected");
     generateNewColors(3);
+    message.innerHTML = "";
     pickedColor = pickedColor();
     colorDisplay.textContent = pickedColor;
     for (var i = 0; i < squares.length; i++) {
@@ -45,6 +47,7 @@ hardBtn.addEventListener("click", function () {
     generateNewColors(6);
     pickedColor = pickedColor();
     colorDisplay.textContent = pickedColor;
+    message.innerHTML = "";
     for (var i = 0; i < squares.length; i++) {
         squares[i].style.background = colors[i];
         squares[i].style.display = "block";
@@ -56,17 +59,28 @@ function run() {
     pickedColor = pickColor();
     colorDisplay.textContent = pickedColor;
 
-    setSquaresColor();
-    addEventListeners();
+    setSquaresColors();
+    setupSquares();
 }
 
-function setSquaresColor() {
+function setSquaresColors() {
+    generateNewColors(numSquares);
+    pickedColor = pickColor();
+    colorDisplay.textContent = pickedColor;
+    resetButton.textContent = "New Colors";
+    message.textContent = "";
+
     for (var i = 0; i < squares.length; i++) {
-        squares[i].style.backgroundColor = colors[i];
+        if(colors[i]) { //check if colors[i] is empty
+            squares[i].style.display = "block";
+            squares[i].style.backgroundColor = colors[i];
+        } else {
+            squares[i].style.display = "none";
+        }
     }
 }
 
-function addEventListeners() {
+function setupSquares() {
     for (var i = 0; i < squares.length; i++) {
         squares[i].addEventListener("click", function () {
             var clickedColor = this.style.backgroundColor;
@@ -98,7 +112,7 @@ function generateRGB() {
 
 function generateNewColors(length) {
     var arr = [];
-    for (var i = 0; i < length - 1; i++) {
+    for (var i = 0; i < length; i++) {
         arr.push(generateRGB());
     }
     colors = arr;
