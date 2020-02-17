@@ -1,37 +1,72 @@
 body {
     background-color: #232323;
+    font-family: "Montserrat", "Avenir";
+    margin: 0;
 }
 
 h1 {
     color: white;
-}
-
-h2 {
-    color: white;
-}
-
-#stripe {
-    background-color: white;
-    height: 30px;
+    background-color: steelblue;
+    line-height: 1.1;
     text-align: center;
-    color: black;
+    font-weight: normal;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 20px 0;
+}
+
+button {
+    border: none;
+    background: none;
+    text-transform: uppercase;
+    height: 100%;
+    font-weight: 700;
+    color: steelblue;
+    letter-spacing: 1px;
+    font-size: inherit;
+    transition: all 0.4s;
+    --webkit-transition: background-color 0.4s; /* to make sure transition works in webkit engine in safari */
+    --moz-transition: background-color 0.4s; /* same, for mozilla */
+}
+
+button:hover {
+    color: white;
+    background: steelblue;
 }
 
 .container {
-    margin: 0 auto;
     max-width: 600px;
+    margin: 20px auto;
 }
 
 .squares {
+    background-color: burlywood;
+    float: left;
     width: 30%;
     padding-bottom: 30%;
-    float: left;
     margin: 1.66%;
-    background-color: burlywood;
-    border-radius: 20px;
+    border-radius: 15%;
+    transition: background-color 0.5s;
+    --webkit-transition: background-color 0.5s; /* to make sure transition works in webkit engine in safari */
+    --moz-transition: background-color 0.5s; /* same, for mozilla */
 }
 
 .selected {
 	color: white;
 	background: steelblue;
+}
+
+#colorDisplay {
+    font-size: 200%;
+}
+
+#stripe {
+    background-color: white;
+    text-align: center;
+    height: 30px;
+}
+
+#message {
+    display: inline-block;
+    width: 20%;
 }

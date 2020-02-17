@@ -26,7 +26,7 @@ resetButton.addEventListener("click", function () {
     generateNewColors(numSquares) //has to be before pickColor();
     pickColor();
     setSquaresColors();
-    h1.style.backgroundColor = "#232323";
+    h1.style.backgroundColor = "steelblue";
 });
 
 easyBtn.addEventListener("click", function () {
@@ -36,7 +36,7 @@ easyBtn.addEventListener("click", function () {
     generateNewColors(numSquares);
     pickColor();
     setSquaresColors();
-    h1.style.backgroundColor = "#232323";
+    h1.style.backgroundColor = "#steelblue";
 });
 
 hardBtn.addEventListener("click", function () {
@@ -46,7 +46,7 @@ hardBtn.addEventListener("click", function () {
     generateNewColors(numSquares);
     pickColor();
     setSquaresColors();
-    h1.style.backgroundColor = "#232323";
+    h1.style.backgroundColor = "#steelblue";
 });
 
 function setSquaresColors() {
