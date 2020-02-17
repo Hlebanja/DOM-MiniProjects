@@ -10,50 +10,39 @@ var h1 = document.querySelector("h1");
 var resetButton = document.getElementById("resetButton");
 var easyBtn = document.querySelector("#easyBtn");
 var hardBtn = document.querySelector("#hardBtn");
-var modeButtons = document.querySelectorAll(".mode");
-
 
 run();
 
 function run() {
-    generateNewColors(numSquares) //has to be before pickColor();
-    pickColor();
     setSquaresColors();
     setupSquares();
+    resetElements();
 }
 
 resetButton.addEventListener("click", function () {
-    generateNewColors(numSquares) //has to be before pickColor();
-    pickColor();
     setSquaresColors();
-    h1.style.backgroundColor = "steelblue";
+    resetElements();
 });
 
 easyBtn.addEventListener("click", function () {
     hardBtn.classList.remove("selected");
     easyBtn.classList.add("selected");
     numSquares = 3;
-    generateNewColors(numSquares);
-    pickColor();
     setSquaresColors();
-    h1.style.backgroundColor = "#steelblue";
+    resetElements();
 });
 
 hardBtn.addEventListener("click", function () {
     hardBtn.classList.add("selected");
     easyBtn.classList.remove("selected");
     numSquares = 6;
-    generateNewColors(numSquares);
-    pickColor();
     setSquaresColors();
-    h1.style.backgroundColor = "#steelblue";
+    resetElements();
 });
 
 function setSquaresColors() {
     generateNewColors(numSquares);
     pickColor();
-    resetButton.textContent = "New Colors";
-
     for (var i = 0; i < squares.length; i++) {
         if(colors[i]) { //check if colors[i] is empty
             squares[i].style.display = "block";
@@ -72,6 +61,7 @@ function setupSquares() {
                 victoryChangeColors(pickedColor);
                 h1.style.backgroundColor = pickedColor;
                 message.innerHTML = "Correct!";
+                resetButton.textContent = "Play again?";
             } else {
                 message.innerHTML = "Try again";
                 this.style.backgroundColor = "#232323";
@@ -85,7 +75,6 @@ function pickColor() {
     var randomNumber = Math.floor(Math.random() * colors.length);
     pickedColor = colors[randomNumber];
     colorDisplay.textContent = pickedColor;
-    message.innerHTML = "";
 }
 
 function generateRGB() {
@@ -108,4 +97,10 @@ function victoryChangeColors(rightColor) {
     for (var i = 0; i < squares.length; i++) {
         squares[i].style.backgroundColor = rightColor;
     }
+}
+
+function resetElements() {
+    h1.style.backgroundColor = "steelblue";
+    resetButton.textContent = "New Colors";
+    message.innerHTML = "";
 }
