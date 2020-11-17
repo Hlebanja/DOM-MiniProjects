@@ -7,13 +7,14 @@ let gameMessage = document.querySelector('.message');
 let checkButton = document.querySelector('.check');
 let againButton = document.querySelector('.again');
 let inputPrompt = document.querySelector('input');
+let answerIcon = document.querySelector('.number');
 let gameBody = document.querySelector('body');
 
 resetGame();
 
 checkButton.addEventListener('click', function () {
   inputPrompt = document.querySelector('input');
-  checkResult(randomNumber, parseInt(inputPrompt.value), scoreCounter);
+  checkResult(randomNumber, parseInt(inputPrompt.value));
 });
 
 againButton.addEventListener('click', function () {
@@ -25,11 +26,12 @@ function resetGame() {
   scoreCounter.textContent = '20';
   gameMessage.textContent = 'Start guessing...';
   inputPrompt.value = 0;
-  document.querySelector('.number').textContent = randomNumber;
+  answerIcon.textContent = '?';
   changeBackgorund('#222');
+  // answerIcon.textContent = randomNumber;
 }
 
-function checkResult(randomNumber, userGuess, scoreCounter) {
+function checkResult(randomNumber, userGuess) {
   console.log(userGuess + typeof userGuess);
 
   if (!isInputValid(userGuess)) {
@@ -41,8 +43,7 @@ function checkResult(randomNumber, userGuess, scoreCounter) {
     reduceScore();
     gameMessage.textContent = 'Too big...';
   } else {
-    gameMessage.textContent = 'winner winner chicken dinner!';
-    changeBackgorund('#60b347');
+    victoryMessage();
     if (parseInt(scoreCounter.textContent) > parseInt(highscore.textContent)) {
       highscore.textContent = scoreCounter.textContent;
     }
@@ -55,6 +56,13 @@ function isInputValid(input) {
   } else {
     return true;
   }
+}
+
+function victoryMessage() {
+  document.querySelector('.number').textContent = randomNumber;
+  gameMessage.textContent = 'winner winner chicken dinner!';
+  answerIcon.textContent = randomNumber;
+  changeBackgorund('#60b347');
 }
 
 function changeBackgorund(color) {
