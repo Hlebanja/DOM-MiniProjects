@@ -32,8 +32,6 @@ function resetGame() {
 }
 
 function checkResult(randomNumber, userGuess) {
-  console.log(userGuess + typeof userGuess);
-
   if (!isInputValid(userGuess)) {
     alert('invalid input. Please insert a number between 1 and 20');
   } else if (userGuess < randomNumber) {
@@ -59,7 +57,6 @@ function isInputValid(input) {
 }
 
 function victoryMessage() {
-  document.querySelector('.number').textContent = randomNumber;
   gameMessage.textContent = 'winner winner chicken dinner!';
   answerIcon.textContent = randomNumber;
   changeBackgorund('#60b347');
