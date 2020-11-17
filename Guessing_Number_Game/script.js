@@ -1,28 +1,27 @@
 'use strict';
 
 let randomNumber = 1 + Math.floor(Math.random() * 4);
+
 let scoreCounter = document.querySelector('.score');
 let highscore = document.querySelector('.highscore');
-
-let inputPrompt;
+let gameMessage = document.querySelector('.message');
 let checkButton = document.querySelector('.check');
+let inputPrompt;
 
 checkButton.addEventListener('click', function () {
   inputPrompt = document.querySelector('input');
-
   checkResult(randomNumber, inputPrompt.value, scoreCounter);
 });
 
-//check if result is < > or = answer.
-//if it's < or >, return message and subtract 1 from score.
-//if it's =, return winning message AND update highscore.
+document.querySelector('.number').textContent = randomNumber;
+
 function checkResult(randomNumber, userGuess, scoreCounter) {
   if (userGuess < randomNumber) {
     reduceScore();
-    alert('too small!');
+    gameMessage.textContent = 'Too small...';
   } else if (userGuess > randomNumber) {
     reduceScore();
-    alert('too big!');
+    gameMessage.textContent = 'Too big...';
   } else {
     alert('winner winner chicken dinner!');
     if (parseInt(scoreCounter.textContent) > parseInt(highscore.textContent)) {
