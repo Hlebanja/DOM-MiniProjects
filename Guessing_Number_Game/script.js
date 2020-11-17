@@ -34,18 +34,26 @@ function resetGame() {
 function checkResult(randomNumber, userGuess) {
   if (!isInputValid(userGuess)) {
     alert('invalid input. Please insert a number between 1 and 20');
-  } else if (userGuess < randomNumber) {
+  } else if (userGuess != randomNumber) {
     reduceScore();
-    gameMessage.textContent = 'Too small...';
-  } else if (userGuess > randomNumber) {
-    reduceScore();
-    gameMessage.textContent = 'Too big...';
+    gameMessage.textContent =
+      userGuess > randomNumber ? 'too big...' : 'Too small...';
   } else {
     victoryMessage();
     if (parseInt(scoreCounter.textContent) > parseInt(highscore.textContent)) {
       highscore.textContent = scoreCounter.textContent;
     }
   }
+}
+
+function reduceScore() {
+  scoreCounter.textContent = parseInt(scoreCounter.textContent) - 1;
+}
+
+function victoryMessage() {
+  gameMessage.textContent = 'winner winner chicken dinner!';
+  answerIcon.textContent = randomNumber;
+  changeBackgorund('#60b347');
 }
 
 function isInputValid(input) {
@@ -56,16 +64,6 @@ function isInputValid(input) {
   }
 }
 
-function victoryMessage() {
-  gameMessage.textContent = 'winner winner chicken dinner!';
-  answerIcon.textContent = randomNumber;
-  changeBackgorund('#60b347');
-}
-
 function changeBackgorund(color) {
   gameBody.style.backgroundColor = color;
-}
-
-function reduceScore() {
-  scoreCounter.textContent = parseInt(scoreCounter.textContent) - 1;
 }
