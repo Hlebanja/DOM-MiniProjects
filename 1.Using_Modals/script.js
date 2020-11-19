@@ -1,7 +1,7 @@
 'use strict';
 
 let modalButtons = document.querySelectorAll('.show-modal');
-let modalOverlay = document.querySelector('.overlay');
+let overlay = document.querySelector('.overlay');
 let modalContent = document.querySelector('.modal');
 let closeButton = document.querySelector('.close-modal');
 
@@ -15,19 +15,20 @@ for (let i = 0; i < modalButtons.length; i++) {
 }
 
 closeButton.addEventListener('click', hideModal);
+overlay.addEventListener('click', hideModal);
 
 document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape' && !modalOverlay.classList.contains('hidden')) {
+  if (e.key === 'Escape' && !overlay.classList.contains('hidden')) {
     hideModal();
   }
 });
 
 function showModal() {
-  modalOverlay.classList.remove('hidden');
+  overlay.classList.remove('hidden');
   modalContent.classList.remove('hidden');
 }
 
 function hideModal() {
-  modalOverlay.classList.add('hidden');
+  overlay.classList.add('hidden');
   modalContent.classList.add('hidden');
 }
