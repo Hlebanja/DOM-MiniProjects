@@ -92,10 +92,11 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
+displayMovements(account1.movements);
 
 const addUsername = function (accounts) {
-  accounts.forEach(function (account) {
-    account.username = account.owner
+  accounts.forEach(function (acc) {
+    acc.username = acc.owner
       .toLowerCase()
       .split(' ')
       .map(name => name[0])
@@ -103,6 +104,29 @@ const addUsername = function (accounts) {
   });
 };
 addUsername(accounts);
-console.log(accounts);
 
-displayMovements(account1.movements);
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov);
+  labelBalance.textContent = `${balance} €`;
+};
+calcDisplayBalance(account1.movements);
+
+const calcDisplayValueIn = function (movements) {
+  const income = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${income}€`;
+};
+calcDisplayValueIn(account1.movements);
+
+const calcDisplayValueOut = function (movements) {
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+};
+calcDisplayValueOut(account1.movements);
+
+// const withdrawals = account1.movements.filter(function (mov) {
+//   return mov < 0;
+// });
