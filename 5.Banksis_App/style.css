@@ -188,12 +188,12 @@ nav {
   margin-right: 2.5rem;
 }
 
-.summary__value--in,
-.summary__value--interest {
+.summary__value--in {
   color: #66c873;
 }
 
-.summary__value--out {
+.summary__value--out,
+.summary__value--fee {
   color: #f5465d;
 }
 

@@ -8,28 +8,28 @@
 const account1 = {
   owner: 'Jonas Schmedtmann',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
-  interestRate: 1.2, // %
+  transactionFee: 0.012, // %
   pin: 1111,
 };
 
 const account2 = {
   owner: 'Jessica Davis',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-  interestRate: 1.5,
+  transactionFee: 0.015,
   pin: 2222,
 };
 
 const account3 = {
   owner: 'Steven Thomas Williams',
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
-  interestRate: 0.7,
+  transactionFee: 0.007,
   pin: 3333,
 };
 
 const account4 = {
   owner: 'Sarah Smith',
   movements: [430, 1000, 700, 50, 90],
-  interestRate: 1,
+  transactionFee: 0.01,
   pin: 4444,
 };
 
@@ -41,7 +41,7 @@ const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
 const labelSumIn = document.querySelector('.summary__value--in');
 const labelSumOut = document.querySelector('.summary__value--out');
-const labelSumInterest = document.querySelector('.summary__value--interest');
+const labelSumFee = document.querySelector('.summary__value--fee');
 const labelTimer = document.querySelector('.timer');
 
 const containerApp = document.querySelector('.app');
@@ -105,28 +105,58 @@ const addUsername = function (accounts) {
 };
 addUsername(accounts);
 
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov);
-  labelBalance.textContent = `${balance} €`;
-};
-calcDisplayBalance(account1.movements);
-
-const calcDisplayValueIn = function (movements) {
-  const income = movements
+const calcDisplayValueIn = function (acc) {
+  const income = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${income}€`;
 };
-calcDisplayValueIn(account1.movements);
+calcDisplayValueIn(account1);
 
-const calcDisplayValueOut = function (movements) {
-  const out = movements
+const calcDisplayValueOut = function (acc) {
+  const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `${Math.abs(out)}€`;
 };
-calcDisplayValueOut(account1.movements);
+calcDisplayValueOut(account1);
 
+const calcTransactionFee = function (acc) {
+  const totalFee = Math.abs(
+    acc.movements
+      .filter(mov => mov < 0)
+      .map(mov => mov * acc.transactionFee)
+      .reduce((acc, mov) => acc + mov, 0)
+  );
+  labelSumFee.textContent = `${totalFee}€`;
+  return totalFee;
+};
+calcTransactionFee(account1);
 // const withdrawals = account1.movements.filter(function (mov) {
 //   return mov < 0;
 // });
+
+const calcDisplayBalance = function (acc) {
+  let balance = movements.reduce((acc, mov) => acc + mov);
+  balance -= calcTransactionFee(acc);
+  labelBalance.textContent = `${balance} €`;
+};
+calcDisplayBalance(account1);
+
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  console.log('click');
+  e.preventDefault();
+});
+
+//create interest method -> transaction fee method
+
+//find account
+//set current account to found account
+//manage undefined error
+
+//display UI welcome message "welcome thiago"
+//change oppacity to show
+//put other methods inside of login - displayMovements, balance, summary
+//clear input fields on login
