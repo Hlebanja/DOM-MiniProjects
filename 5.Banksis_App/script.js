@@ -150,8 +150,6 @@ btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
 });
 
-//create interest method -> transaction fee method
-
 //find account
 //set current account to found account
 //manage undefined error
