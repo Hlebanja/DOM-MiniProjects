@@ -132,10 +132,12 @@ const calcDisplayBalance = function (acc) {
   labelBalance.textContent = `${balance} €`;
 };
 
+const findAccount = inputUsername =>
+  accounts.find(acc => acc.username === inputUsername);
+
 const validateLogin = function () {
-  const userAccount = accounts.find(
-    (acc, i, arr) => acc.username === inputLoginUsername.value
-  );
+  const userAccount = findAccount(inputLoginUsername.value);
+
   if (userAccount?.pin === Number(inputLoginPin.value)) {
     loggedAccount = userAccount;
   }
@@ -152,6 +154,7 @@ const displayUserInfo = function (acc) {
   calcTransactionFee(acc);
 };
 
+//Log in functionality
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
   validateLogin();
@@ -162,3 +165,16 @@ btnLogin.addEventListener('click', function (e) {
     displayUserInfo(loggedAccount);
   }
 });
+
+//Transfer money functionality
+// btnTransfer.addEventListener('click', function (e) {
+//   const amount = Number(inputTransferAmount.textContent);
+//   if (amount >)
+//   const receiver = findAccount(inputTransferTo.textContent);
+// });
+
+//read form
+//validate that you have enough funds
+//validate that receiving account exists
+//subtract money from your account
+//add money to receiving account
