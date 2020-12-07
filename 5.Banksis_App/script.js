@@ -169,21 +169,20 @@ btnLogin.addEventListener('click', function (e) {
 //Transfer money functionality
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
-  console.log(amount);
   const receiver = findAccount(inputTransferTo.value);
-  receiver.movements.push(amount);
-  loggedAccount.movements.push(-amount);
-  displayUserInfo(loggedAccount);
-  console.log(amount);
-  console.log(receiver);
-  console.log(loggedAccount);
-});
+  const amount = Number(inputTransferAmount.value);
 
-//read form
-//check if it is a positive amount
-//check if receiver is different than sender
-//validate that you have enough funds
-//validate that receiving account exists
-//subtract money from your account
-//add money to receiving account
+  console.log(loggedAccount.balance);
+  console.log(loggedAccount.username);
+  if (
+    amount > 0 &&
+    receiver &&
+    receiver !== loggedAccount.username &&
+    amount < loggedAccount.balance
+  ) {
+    receiver.movements.push(amount);
+    loggedAccount.movements.push(-amount);
+  }
+  displayUserInfo(loggedAccount);
+  inputTransferTo.value = inputTransferAmount.value = '';
+});
