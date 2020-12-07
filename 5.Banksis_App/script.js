@@ -1,9 +1,5 @@
 'use strict';
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// BANKIST APP
-
 // Data
 const account1 = {
   owner: 'Jonas Schmedtmann',
@@ -60,9 +56,7 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
+let loggedAccount;
 
 const currencies = new Map([
   ['USD', 'United States dollar'],
@@ -92,7 +86,6 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
 
 const addUsername = function (accounts) {
   accounts.forEach(function (acc) {
@@ -111,7 +104,6 @@ const calcDisplayValueIn = function (acc) {
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${income}€`;
 };
-calcDisplayValueIn(account1);
 
 const calcDisplayValueOut = function (acc) {
   const out = acc.movements
@@ -119,7 +111,6 @@ const calcDisplayValueOut = function (acc) {
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `${Math.abs(out)}€`;
 };
-calcDisplayValueOut(account1);
 
 const calcTransactionFee = function (acc) {
   const totalFee = Math.abs(
@@ -131,7 +122,6 @@ const calcTransactionFee = function (acc) {
   labelSumFee.textContent = `${totalFee}€`;
   return totalFee;
 };
-calcTransactionFee(account1);
 // const withdrawals = account1.movements.filter(function (mov) {
 //   return mov < 0;
 // });
@@ -141,20 +131,34 @@ const calcDisplayBalance = function (acc) {
   balance -= calcTransactionFee(acc);
   labelBalance.textContent = `${balance} €`;
 };
-calcDisplayBalance(account1);
 
-let currentAccount;
+const validateLogin = function () {
+  const userAccount = accounts.find(
+    (acc, i, arr) => acc.username === inputLoginUsername.value
+  );
+  if (userAccount?.pin === Number(inputLoginPin.value)) {
+    loggedAccount = userAccount;
+  }
+};
+
+const displayUserInfo = function (acc) {
+  labelWelcome.textContent = `Welcome ${loggedAccount.owner.split(' ')[0]}`;
+  containerApp.style.opacity = 100;
+
+  displayMovements(acc.movements);
+  calcDisplayValueIn(acc);
+  calcDisplayBalance(acc);
+  calcDisplayValueOut(acc);
+  calcTransactionFee(acc);
+};
 
 btnLogin.addEventListener('click', function (e) {
-  console.log('click');
   e.preventDefault();
+  validateLogin();
+  inputLoginUsername.value = inputLoginPin.value = '';
+  inputLoginPin.blur();
+
+  if (loggedAccount) {
+    displayUserInfo(loggedAccount);
+  }
 });
-
-//find account
-//set current account to found account
-//manage undefined error
-
-//display UI welcome message "welcome thiago"
-//change oppacity to show
-//put other methods inside of login - displayMovements, balance, summary
-//clear input fields on login
