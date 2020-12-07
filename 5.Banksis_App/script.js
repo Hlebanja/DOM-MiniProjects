@@ -31,6 +31,17 @@ const account4 = {
 
 const accounts = [account1, account2, account3, account4];
 
+const addUsername = function (accounts) {
+  accounts.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+addUsername(accounts);
+
 // Elements
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
@@ -87,17 +98,6 @@ const displayMovements = function (movements) {
   });
 };
 
-const addUsername = function (accounts) {
-  accounts.forEach(function (acc) {
-    acc.username = acc.owner
-      .toLowerCase()
-      .split(' ')
-      .map(name => name[0])
-      .join('');
-  });
-};
-addUsername(accounts);
-
 const calcDisplayValueIn = function (acc) {
   const income = acc.movements
     .filter(mov => mov > 0)
@@ -113,35 +113,27 @@ const calcDisplayValueOut = function (acc) {
 };
 
 const calcTransactionFee = function (acc) {
-  const totalFee = Math.abs(
+  const transactionFee = Math.abs(
     acc.movements
       .filter(mov => mov < 0)
       .map(mov => mov * acc.transactionFee)
       .reduce((acc, mov) => acc + mov, 0)
   );
-  labelSumFee.textContent = `${totalFee}€`;
-  return totalFee;
+  labelSumFee.textContent = `${transactionFee}€`;
+  return transactionFee;
 };
 // const withdrawals = account1.movements.filter(function (mov) {
 //   return mov < 0;
 // });
 
 const calcDisplayBalance = function (acc) {
-  let balance = movements.reduce((acc, mov) => acc + mov);
-  balance -= calcTransactionFee(acc);
-  labelBalance.textContent = `${balance} €`;
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov);
+  acc.balance -= calcTransactionFee(acc);
+  labelBalance.textContent = `${acc.balance} €`;
 };
 
 const findAccount = inputUsername =>
   accounts.find(acc => acc.username === inputUsername);
-
-const validateLogin = function () {
-  const userAccount = findAccount(inputLoginUsername.value);
-
-  if (userAccount?.pin === Number(inputLoginPin.value)) {
-    loggedAccount = userAccount;
-  }
-};
 
 const displayUserInfo = function (acc) {
   labelWelcome.textContent = `Welcome ${loggedAccount.owner.split(' ')[0]}`;
@@ -149,9 +141,17 @@ const displayUserInfo = function (acc) {
 
   displayMovements(acc.movements);
   calcDisplayValueIn(acc);
-  calcDisplayBalance(acc);
   calcDisplayValueOut(acc);
   calcTransactionFee(acc);
+  calcDisplayBalance(acc);
+};
+
+const validateLogin = function () {
+  const userAccount = findAccount(inputLoginUsername.value);
+
+  if (userAccount?.pin === Number(inputLoginPin.value)) {
+    loggedAccount = userAccount;
+  }
 };
 
 //Log in functionality
@@ -167,13 +167,22 @@ btnLogin.addEventListener('click', function (e) {
 });
 
 //Transfer money functionality
-// btnTransfer.addEventListener('click', function (e) {
-//   const amount = Number(inputTransferAmount.textContent);
-//   if (amount >)
-//   const receiver = findAccount(inputTransferTo.textContent);
-// });
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  console.log(amount);
+  const receiver = findAccount(inputTransferTo.value);
+  receiver.movements.push(amount);
+  loggedAccount.movements.push(-amount);
+  displayUserInfo(loggedAccount);
+  console.log(amount);
+  console.log(receiver);
+  console.log(loggedAccount);
+});
 
 //read form
+//check if it is a positive amount
+//check if receiver is different than sender
 //validate that you have enough funds
 //validate that receiving account exists
 //subtract money from your account
