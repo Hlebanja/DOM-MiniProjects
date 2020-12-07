@@ -154,7 +154,7 @@ const validateLogin = function () {
   }
 };
 
-//Log in functionality
+//Log in feature
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
   validateLogin();
@@ -166,14 +166,12 @@ btnLogin.addEventListener('click', function (e) {
   }
 });
 
-//Transfer money functionality
+//Transfer money feature
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
   const receiver = findAccount(inputTransferTo.value);
   const amount = Number(inputTransferAmount.value);
 
-  console.log(loggedAccount.balance);
-  console.log(loggedAccount.username);
   if (
     amount > 0 &&
     receiver &&
@@ -183,6 +181,11 @@ btnTransfer.addEventListener('click', function (e) {
     receiver.movements.push(amount);
     loggedAccount.movements.push(-amount);
   }
+
   displayUserInfo(loggedAccount);
   inputTransferTo.value = inputTransferAmount.value = '';
 });
+
+//Delete account feature
+
+//loan money feature: bank will loan if you have some deposit that is at least 10% of the amount.
