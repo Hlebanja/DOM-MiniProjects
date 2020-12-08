@@ -122,9 +122,6 @@ const calcTransactionFee = function (acc) {
   labelSumFee.textContent = `${transactionFee}€`;
   return transactionFee;
 };
-// const withdrawals = account1.movements.filter(function (mov) {
-//   return mov < 0;
-// });
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov);
@@ -216,3 +213,14 @@ btnClose.addEventListener('click', function (e) {
 });
 
 //loan money feature: bank will loan if you have some deposit that is at least 10% of the amount.
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+  console.log(typeof amount);
+  if (loggedAccount.movements.some(mov => mov >= amount * 0.1)) {
+    loggedAccount.movements.push(amount);
+    displayUserInfo(loggedAccount);
+  }
+});
+
+//implement sorting
