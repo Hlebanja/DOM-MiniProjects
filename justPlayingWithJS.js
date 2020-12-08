@@ -70,19 +70,19 @@ const game = {
 // game.scored.forEach((player, i) => console.log(`${player} score ${i}`));
 
 // 2.
-let sum = 0;
-for (const [key, value] of Object.entries(game.odds)) {
-  //this is how you iterate through elements of an object
-  sum += value;
-}
-console.log(sum / Object.entries(game.odds).length);
+// let sum = 0;
+// for (const [key, value] of Object.entries(game.odds)) {
+//   //this is how you iterate through elements of an object
+//   sum += value;
+// }
+// console.log(sum / Object.entries(game.odds).length);
 
-// 2. alternative
-const average = Object.entries(game.odds).reduce(
-  (acc, entrie, i, arr) => (acc += entrie[1] / arr.length),
-  0
-);
-console.log(average);
+// // 2. alternative
+// const average = Object.entries(game.odds).reduce(
+//   (acc, entrie, i, arr) => (acc += entrie[1] / arr.length),
+//   0
+// );
+// console.log(average);
 
 // Challenge;
 
@@ -115,3 +115,59 @@ console.log(average);
 
 // var result = foo(arr);
 // console.log('[' + result[0] + ']', '[' + result[1] + ']');
+
+/*
+1. Create an array 'events' of the different game events that happened (no duplicates)
+2. After the game has finished, is was found that the yellow card from minute 64 was unfair. 
+So remove this event from the game events log.
+3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this:
+      [FIRST HALF] 17: ⚽️ GOAL
+
+GOOD LUCK 😀
+*/
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+const eventsArr = [...gameEvents];
+
+//removing duplicates
+const uniqueArr = [...new Set(eventsArr)];
+
+//deleting specific element of bidimensional array
+uniqueArr.splice(
+  uniqueArr.findIndex(element => element[0] === 64),
+  1
+);
+console.log(uniqueArr);
+
+for ([index, key] of uniqueArr.entries()) {
+  console.log(index + ' ' + key);
+}
+//Map to array
+// let events = [...gameEvents];
+// console.log(events);
+
+//Object to array
+// const car = {
+//   name: 'Pajero',
+//   brand: 'volkswagen',
+// };
+// console.log(Object.entries(car));
+
+var carArr = ['gol', 'pajero', 'carrera', 'polo'];
+// //way of easily getting the index out of an array
+// for (const [index, element] of carArr.entries())
+//   console.log(index + ' ' + element);
