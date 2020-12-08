@@ -141,21 +141,20 @@ const gameEvents = new Map([
   [92, '🔶 Yellow card'],
 ]);
 
-const eventsArr = [...gameEvents];
-
 //removing duplicates
-const uniqueArr = [...new Set(eventsArr)];
+const events = [...new Set(gameEvents.values())];
+console.log(events);
 
 //deleting specific element of bidimensional array
-uniqueArr.splice(
-  uniqueArr.findIndex(element => element[0] === 64),
-  1
-);
-console.log(uniqueArr);
+// uniqueArr.splice(
+//   uniqueArr.findIndex(element => element[0] === 64),
+//   1
+// );
+// console.log(uniqueArr);
 
-for ([index, key] of uniqueArr.entries()) {
-  console.log(index + ' ' + key);
-}
+// for (let [index, key] of uniqueArr.entries()) {
+// console.log(index + ' ' + key);
+// }
 //Map to array
 // let events = [...gameEvents];
 // console.log(events);
