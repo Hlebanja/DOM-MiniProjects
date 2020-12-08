@@ -132,8 +132,11 @@ const calcDisplayBalance = function (acc) {
   labelBalance.textContent = `${acc.balance} €`;
 };
 
-const findAccount = inputUsername =>
-  accounts.find(acc => acc.username === inputUsername);
+const logout = function () {
+  labelWelcome.textContent = 'Log in to get started';
+  containerApp.style.opacity = 0;
+  loggedAccount = {};
+};
 
 const displayUserInfo = function (acc) {
   labelWelcome.textContent = `Welcome ${loggedAccount.owner.split(' ')[0]}`;
@@ -146,12 +149,17 @@ const displayUserInfo = function (acc) {
   calcDisplayBalance(acc);
 };
 
+const findAccount = inputUsername =>
+  accounts.find(acc => acc.username === inputUsername);
+
+const isPinValid = (acc, inputPin) => acc?.pin === Number(inputPin);
+
 const validateLogin = function () {
   const userAccount = findAccount(inputLoginUsername.value);
 
-  if (userAccount?.pin === Number(inputLoginPin.value)) {
-    loggedAccount = userAccount;
-  }
+  isPinValid(userAccount, inputLoginPin.value)
+    ? (loggedAccount = userAccount)
+    : alert('invalid credentials');
 };
 
 //Log in feature
@@ -187,5 +195,24 @@ btnTransfer.addEventListener('click', function (e) {
 });
 
 //Delete account feature
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  const inputUsername = inputCloseUsername.value;
+  const password = inputClosePin.value;
+
+  if (
+    isPinValid(findAccount(inputUsername), password) &&
+    loggedAccount.username === inputUsername
+  ) {
+    accounts.splice(
+      accounts.findIndex(acc => acc.username === inputUsername),
+      1
+    );
+    logout();
+    inputCloseUsername.value = inputClosePin.value = '';
+  } else {
+    alert('Invalid credentials!');
+  }
+});
 
 //loan money feature: bank will loan if you have some deposit that is at least 10% of the amount.
