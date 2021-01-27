@@ -361,3 +361,55 @@ GOOD LUCK 😀
 //Then, to search for the result of 2 dices it would be a simple search on the object, and therefore would have
 //a time complexity of O(n). Downside is that it would have a worse space-complexity as it'd require memory to store the map object created.
 //The idea is that, in case you had to calculate the result for 2 different dices 1000 times every  it would take a long time to calculate it, but th
+
+// 3
+// SET 0
+// CLEAR 1
+// AND 2 2
+// 6
+// SET 31
+// SET 30
+// CLEAR 29
+// AND 29 30
+// OR 29 30
+// AND 30 28
+// 0
+
+//??????????????????????????????01
+//1?1?????????????????????????????
+
+//read input
+let exampleInput =
+  '3\nSET 0\nCLEAR 1\nAND 2 2\n6\nSET 31\nSET 30\nCLEAR 29\nAND 29 30\nOR 29 30\nAND 30 28\n0';
+let inputArr = exampleInput.split('\n');
+
+let sequenceArr = [];
+
+//"3", "SET 0", "CLEAR 1", "AND 2 2",
+//"6", "SET 31", "SET 30", "CLEAR 29", "AND 29 30", "OR 29 30", "AND 30 28", "0"]
+
+for (let i = 0; i < inputArr.length; i++) {
+  let sequenceStart = Number(inputArr[i]);
+  if (sequenceStart === 0) break;
+
+  if (isNaN(Number(sequenceStart))) {
+    //do nothing
+  } else {
+    //beginning of a new sequence
+    let sequence = [];
+
+    //add all the instructions that are part of a sequence into an array
+    for (let j = i + 1; j <= sequenceStart + i; j++) {
+      sequence.push(inputArr[j]);
+    }
+
+    //add the sequence of instructions array to a new array.
+    sequenceArr.push(sequence);
+  }
+}
+console.log(sequenceArr);
+//create strings based on sequenceArr
+
+//for each input sequence, create a 32-bit array filled with "????"
+//create functions for each of the operations.
+//recognize end of input with 0
