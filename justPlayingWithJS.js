@@ -387,51 +387,55 @@ let inputArr = exampleInput.split('\n');
 //"6", "SET 31", "SET 30", "CLEAR 29", "AND 29 30", "OR 29 30", "AND 30 28", "0"]
 
 //breaks inputArr into sequences
-let sequenceArr = [];
-for (let i = 0; i < inputArr.length; i++) {
-  let sequenceStart = Number(inputArr[i]);
-  if (sequenceStart === 0) break;
+function inputToSequences(inputArr) {
+  let sequencesArr = [];
+  for (let i = 0; i < inputArr.length; i++) {
+    let sequenceStart = Number(inputArr[i]);
+    if (sequenceStart === 0) break;
 
-  if (isNaN(Number(sequenceStart))) {
-    //do nothing
-  } else {
-    //beginning of a new sequence
-    let sequence = [];
+    if (isNaN(Number(sequenceStart))) {
+      //do nothing
+    } else {
+      //beginning of a new sequence
+      let sequence = [];
 
-    //add all the instructions that are part of a sequence into an array
-    for (let j = i + 1; j <= sequenceStart + i; j++) {
-      sequence.push(inputArr[j]);
+      //add all the instructions that are part of a sequence into an array
+      for (let j = i + 1; j <= sequenceStart + i; j++) {
+        sequence.push(inputArr[j]);
+      }
+
+      //add the sequence of instructions array to a new array.
+      sequencesArr.push(sequence);
     }
-
-    //add the sequence of instructions array to a new array.
-    sequenceArr.push(sequence);
   }
-}
-console.log(sequenceArr);
-
-//create strings based on sequenceArr
-let bitArrays = [];
-for (let i = 0; i < sequenceArr.length; i++) {
-  bitArrays.push('????????????????????????????????'.split(''));
+  return sequencesArr;
 }
 
-//clear i
+//create strings based on sequencesArr
+function createBitsStrings(sequencesArr) {
+  let bitsArrays = [];
+  for (let i = 0; i < sequencesArr.length; i++) {
+    bitsArrays.push('????????????????????????????????'.split(''));
+  }
+  return bitsArrays;
+}
+
+//put 0 into index i
 function clearBit(bitArr, i) {
   bitArr[31 - i] = '0';
 }
 
-//set i
+//put 1 into index i
 function setBit(bitArr, i) {
   bitArr[31 - i] = '1';
 }
 
-//unset i
+//put ? into index i
 function questionMarkBit(bitArr, i) {
   bitArr[31 - i] = '?';
 }
-// questionMarkBit(bitArrays[0], 0);
 
-//OR i j -> put result of OR into i
+//OR i j -> put result of OR into index i
 function booleanSumBits(bitArr, i, j) {
   if (bitArr[31 - i] == '1' || bitArr[31 - j] == '1') {
     setBit(bitArr, i);
@@ -442,23 +446,54 @@ function booleanSumBits(bitArr, i, j) {
   }
 }
 
-//AND i j -> put result of AND into i
+//AND i j -> put result of AND into index i
 function booleanMultiplyBits(bitArr, i, j) {
   if (bitArr[31 - i] == '1' && bitArr[31 - j] == '1') {
     setBit(bitArr, i);
   } else {
-    bitArr[31 - i] == '0' && bitArr[31 - j] == '0'
+    bitArr[31 - i] == '0' || bitArr[31 - j] == '0'
       ? clearBit(bitArr, i)
       : questionMarkBit(bitArr, i);
   }
 }
 
-clearBit(bitArrays[0], 0);
-setBit(bitArrays[0], 1);
+let sequencesArr = inputToSequences(inputArr); //Array with multiple sequences of instructions
+let bitsArrays = createBitsStrings(sequencesArr);
+console.log(sequencesArr);
+console.log(bitsArrays);
 
-booleanSumBits(bitArrays[0], 0, 2);
+// clearBit(bitsArrays[0], 0);
+// setBit(bitsArrays[0], 1);
+// booleanSumBits(bitsArrays[0], 1, 0);
+// booleanMultiplyBits(bitsArrays[0], 1, 2);
+// questionMarkBit(bitsArrays[0], 0);
+console.log(bitsArrays[0]);
 
-console.log(bitArrays[0]);
+//now I want to execute each sequence.
+console.log(sequencesArr[0]);
 
-//create functions for each of the operations.
+let instructionsSequence = sequencesArr[0];
+// console.log(instructionSequence);
+
+function applyInstruction(instruction, bitArr) {
+  let instructionParts = instruction.split(' ');
+  console.log(instructionParts);
+  if (instructionParts[0] === 'SET') {
+    setBit(bitArr, parseInt(instructionParts[1]));
+  } else if (instructionParts[0] === 'CLEAR') {
+    clearBit(bitArr, parseInt(instructionParts[1]));
+  } else if (instructionParts[0] === 'OR') {
+    booleanSumBits(bitArr, instructionParts[1], instructionParts[2]);
+  } else if (instructionParts[0] === 'AND') {
+    booleanMultiplyBits(bitArr, instructionParts[1], instructionParts[2]);
+  } else {
+    console.error('Something terrible has happened');
+  }
+}
+
 //recognize end of input with 0
+
+//Reminders:
+//Exercise 1:
+//change naming arr for something better
+//write comments for the whole thing
