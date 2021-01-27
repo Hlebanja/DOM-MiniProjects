@@ -265,68 +265,99 @@ GOOD LUCK 😀
 //create new array
 
 //n2 complexity
-function calculatePossibleRolls(firstDice, secondDice) {
-  let rollsArr = [];
-  for (let i = 1; i <= firstDice; i++) {
-    for (let j = 1; j <= secondDice; j++) {
-      rollsArr.push(i + j);
-    }
-  }
-  return rollsArr;
-}
 
-//yes it is from slackOverflow.
-//It is the best solution for this problem that I know, I've used it before and will use it again.
-function occurrencesCounter(arr) {
-  let a = [],
-    b = [],
-    prev;
+// const readline = require('readline');
 
-  let sortedArr = arr.slice().sort();
-  for (let i = 0; i < sortedArr.length; i++) {
-    if (sortedArr[i] !== prev) {
-      a.push(sortedArr[i]);
-      b.push(1);
-    } else {
-      b[b.length - 1]++;
-    }
-    prev = sortedArr[i];
-  }
-  return [a, b];
-}
+// function calculatePossibleRolls(firstDice, secondDice) {
+//   let rollsArr = [];
+//   for (let i = 1; i <= firstDice; i++) {
+//     for (let j = 1; j <= secondDice; j++) {
+//       rollsArr.push(i + j);
+//     }
+//   }
+//   return rollsArr;
+// }
 
-function findMax(arr) {
-  let max = 0; //safe to initialize as 0, considering dice rolls are always > 0
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] > max) {
-      max = arr[i];
-    }
-  }
-  return max;
-}
+// function occurrencesCounter(arr) {
+//   let rolls = [], //contain possible rolls
+//     occurrences = [], //contain, respectively, occurrences count
+//     prev;
 
-const rollsArr = calculatePossibleRolls(6, 4);
-const resultArrays = occurrencesCounter(rollsArr);
-console.log('[' + resultArrays[0] + ']', '[' + resultArrays[1] + ']');
+//   let sortedArr = arr.slice().sort(); //slice().sort() as not to mutate original array
+//   for (let i = 0; i < sortedArr.length; i++) {
+//     if (sortedArr[i] !== prev) {
+//       rolls.push(sortedArr[i]);
+//       occurrences.push(1);
+//     } else {
+//       occurrences[occurrences.length - 1]++;
+//     }
+//     prev = sortedArr[i];
+//   }
+//   return [rolls, occurrences];
+// }
 
-const max = findMax(resultArrays[1]);
-console.log(max);
+// function findMaxOccurrences(arr) {
+//   let max = 0; //safe to initialize as 0, considering dice rolls are always > 0
+//   for (let i = 0; i < arr.length; i++) {
+//     if (arr[i] > max) {
+//       max = arr[i];
+//     }
+//   }
+//   return max;
+// }
 
-//[10,2,3,4,5,6,7,8,9] [1,1,2,3,4,4,4,3,2]
+// function createResultOutput(resultArrays, max) {
+//   //resultArrays[0] contain the possible rolls
+//   //resultArrays[1] contain the rolls occurrences count
+//   let result = [];
+//   for (let i = 0; i < resultArrays[1].length; i++) {
+//     if (resultArrays[1][i] === max) {
+//       result.push(resultArrays[0][i]);
+//     }
+//   }
+//   result.sort((a, b) => a - b); //ascending order
+//   return result;
+// }
 
-//add to new array every element that has the max count
-let result = [];
-for (let i = 0; i < resultArrays[1]; i++) {
-  if (resultArrays[1][i] === max) {
-    result.push(resultArrays[0][i]);
-  }
-}
-result.sort();
+// function printResults(arr) {
+//   arr.forEach(element => console.log(element));
+// }
 
-//sort and return array.
+// const rl = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// });
 
-//OR new object. explore possibilities later
+// rl.on('line', line => {
+//   var nums = line.split(' ');
+//   var firstDice = parseInt(nums[0]);
+//   var secondDice = parseInt(nums[1]);
 
-//possibility 1: get all possibilities + foo occurrences counting
-//possibility 2: get all possibilities + reduce counting each occurrence
-//possibility 3: get object with all possibilities for dices between 1 and 20
+//   const rollsArr = calculatePossibleRolls(firstDice, secondDice);
+//   const resultArrays = occurrencesCounter(rollsArr);
+
+//   //to help you understand what the resultArrays is:
+//   // console.log('[' + resultArrays[0] + ']', '[' + resultArrays[1] + ']');
+
+//   const max = findMaxOccurrences(resultArrays[1]);
+//   const result = createResultOutput(resultArrays, max);
+//   printResults(result);
+// });
+
+//If you had to calculate the most probable dice roll for, say, 1000 dice rolls per second
+//an alternative solution can be proposed.
+
+//Alternative (crazy) solution:
+//create map() collection with all combinations of faced dices between 4 and 20 as keys.
+//for each combination of dices, the most probable roll result would be calculated and stored as values.
+//Keys: arrays with 2 elements, each element the dices' number of faces.
+//respective values: array with the result (most probable rolls) of those two specific dices.
+
+//It would require a lot of calculation once,
+//but once you had the map object with all possible combinations and results,
+//it would be faster to find the result then to calculate individually each time
+//the possibilities and result for each combination of dices.
+
+//Then, to search for the result of 2 dices it would be a simple search on the object, and therefore would have
+//a time complexity of O(n). Downside is that it would have a worse space-complexity as it'd require memory to store the map object created.
+//The idea is that, in case you had to calculate the result for 2 different dices 1000 times every  it would take a long time to calculate it, but th
