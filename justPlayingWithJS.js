@@ -383,11 +383,11 @@ let exampleInput =
   '3\nSET 0\nCLEAR 1\nAND 2 2\n6\nSET 31\nSET 30\nCLEAR 29\nAND 29 30\nOR 29 30\nAND 30 28\n0';
 let inputArr = exampleInput.split('\n');
 
-let sequenceArr = [];
-
 //"3", "SET 0", "CLEAR 1", "AND 2 2",
 //"6", "SET 31", "SET 30", "CLEAR 29", "AND 29 30", "OR 29 30", "AND 30 28", "0"]
 
+//breaks inputArr into sequences
+let sequenceArr = [];
 for (let i = 0; i < inputArr.length; i++) {
   let sequenceStart = Number(inputArr[i]);
   if (sequenceStart === 0) break;
@@ -408,8 +408,57 @@ for (let i = 0; i < inputArr.length; i++) {
   }
 }
 console.log(sequenceArr);
-//create strings based on sequenceArr
 
-//for each input sequence, create a 32-bit array filled with "????"
+//create strings based on sequenceArr
+let bitArrays = [];
+for (let i = 0; i < sequenceArr.length; i++) {
+  bitArrays.push('????????????????????????????????'.split(''));
+}
+
+//clear i
+function clearBit(bitArr, i) {
+  bitArr[31 - i] = '0';
+}
+
+//set i
+function setBit(bitArr, i) {
+  bitArr[31 - i] = '1';
+}
+
+//unset i
+function questionMarkBit(bitArr, i) {
+  bitArr[31 - i] = '?';
+}
+// questionMarkBit(bitArrays[0], 0);
+
+//OR i j -> put result of OR into i
+function booleanSumBits(bitArr, i, j) {
+  if (bitArr[31 - i] == '1' || bitArr[31 - j] == '1') {
+    setBit(bitArr, i);
+  } else {
+    bitArr[31 - i] == '0' && bitArr[31 - j] == '0'
+      ? clearBit(bitArr, i)
+      : questionMarkBit(bitArr, i);
+  }
+}
+
+//AND i j -> put result of AND into i
+function booleanMultiplyBits(bitArr, i, j) {
+  if (bitArr[31 - i] == '1' && bitArr[31 - j] == '1') {
+    setBit(bitArr, i);
+  } else {
+    bitArr[31 - i] == '0' && bitArr[31 - j] == '0'
+      ? clearBit(bitArr, i)
+      : questionMarkBit(bitArr, i);
+  }
+}
+
+clearBit(bitArrays[0], 0);
+setBit(bitArrays[0], 1);
+
+booleanSumBits(bitArrays[0], 0, 2);
+
+console.log(bitArrays[0]);
+
 //create functions for each of the operations.
 //recognize end of input with 0
