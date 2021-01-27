@@ -20,46 +20,46 @@ BONUS: Create an object called 'scorers' which contains the names of the players
 GOOD LUCK 😀
 */
 
-const game = {
-  team1: 'Bayern Munich',
-  team2: 'Borrussia Dortmund',
-  players: [
-    [
-      'Neuer',
-      'Pavard',
-      'Martinez',
-      'Alaba',
-      'Davies',
-      'Kimmich',
-      'Goretzka',
-      'Coman',
-      'Muller',
-      'Gnarby',
-      'Lewandowski',
-    ],
-    [
-      'Burki',
-      'Schulz',
-      'Hummels',
-      'Akanji',
-      'Hakimi',
-      'Weigl',
-      'Witsel',
-      'Hazard',
-      'Brandt',
-      'Sancho',
-      'Gotze',
-    ],
-  ],
-  score: '4:0',
-  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
-  date: 'Nov 9th, 2037',
-  odds: {
-    team1: 1.33,
-    x: 3.25,
-    team2: 6.5,
-  },
-};
+// const game = {
+//   team1: 'Bayern Munich',
+//   team2: 'Borrussia Dortmund',
+//   players: [
+//     [
+//       'Neuer',
+//       'Pavard',
+//       'Martinez',
+//       'Alaba',
+//       'Davies',
+//       'Kimmich',
+//       'Goretzka',
+//       'Coman',
+//       'Muller',
+//       'Gnarby',
+//       'Lewandowski',
+//     ],
+//     [
+//       'Burki',
+//       'Schulz',
+//       'Hummels',
+//       'Akanji',
+//       'Hakimi',
+//       'Weigl',
+//       'Witsel',
+//       'Hazard',
+//       'Brandt',
+//       'Sancho',
+//       'Gotze',
+//     ],
+//   ],
+//   score: '4:0',
+//   scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+//   date: 'Nov 9th, 2037',
+//   odds: {
+//     team1: 1.33,
+//     x: 3.25,
+//     team2: 6.5,
+//   },
+// };
 
 //This is how to easily work with arrays including element indexes
 // for (const [i, x] of game.scored.entries()) {
@@ -127,23 +127,23 @@ So remove this event from the game events log.
 GOOD LUCK 😀
 */
 
-const gameEvents = new Map([
-  [17, '⚽️ GOAL'],
-  [36, '🔁 Substitution'],
-  [47, '⚽️ GOAL'],
-  [61, '🔁 Substitution'],
-  [64, '🔶 Yellow card'],
-  [69, '🔴 Red card'],
-  [70, '🔁 Substitution'],
-  [72, '🔁 Substitution'],
-  [76, '⚽️ GOAL'],
-  [80, '⚽️ GOAL'],
-  [92, '🔶 Yellow card'],
-]);
+// const gameEvents = new Map([
+//   [17, '⚽️ GOAL'],
+//   [36, '🔁 Substitution'],
+//   [47, '⚽️ GOAL'],
+//   [61, '🔁 Substitution'],
+//   [64, '🔶 Yellow card'],
+//   [69, '🔴 Red card'],
+//   [70, '🔁 Substitution'],
+//   [72, '🔁 Substitution'],
+//   [76, '⚽️ GOAL'],
+//   [80, '⚽️ GOAL'],
+//   [92, '🔶 Yellow card'],
+// ]);
 
 //removing duplicates
-const events = [...new Set(gameEvents.values())];
-console.log(events);
+// const events = [...new Set(gameEvents.values())];
+// console.log(events);
 
 //deleting specific element of bidimensional array
 // uniqueArr.splice(
@@ -155,6 +155,7 @@ console.log(events);
 // for (let [index, key] of uniqueArr.entries()) {
 // console.log(index + ' ' + key);
 // }
+
 //Map to array
 // let events = [...gameEvents];
 // console.log(events);
@@ -166,7 +167,166 @@ console.log(events);
 // };
 // console.log(Object.entries(car));
 
-var carArr = ['gol', 'pajero', 'carrera', 'polo'];
+// var carArr = ['gol', 'pajero', 'carrera', 'polo'];
+
 // //way of easily getting the index out of an array
 // for (const [index, element] of carArr.entries())
 //   console.log(index + ' ' + element);
+
+// const Car = function (make, speed) {
+//   this.make = make;
+//   this.speed = speed;
+// };
+
+// Car.prototype.accelerate = function () {
+//   this.speed += 10;
+// };
+
+// let test = new Car('Volkswagen', 100);
+
+// console.log(test.make + ' ' + test.speed);
+
+// test.accelerate();
+
+// console.log(test.make + ' ' + test.speed);
+
+//create a class Car
+
+// class Car {
+//   constructor(make, speed, name) {
+//     this.make = make;
+//     this.speed = speed;
+//     this.name = name;
+//   }
+
+//   get fullDescription() {
+//     return `the car ${this.name} is manufactured by ${this.make}`;
+//   }
+
+//   set carName(name) {
+//     this.name = name;
+//   }
+
+//   get speedUS() {
+//     return this.speed / 1.6;
+//   }
+
+//   set speedUS(speed) {
+//     this.speed = speed * 1.6;
+//   }
+
+//   accelerate() {
+//     this.speed += 10;
+//   }
+//   break() {
+//     this.break -= 10;
+//   }
+// }
+
+// const polo = new Car('Volkswagen', 140, 'polo');
+// console.log(polo);
+
+// polo.carName = 'john';
+// console.log(polo); //name = john
+
+// console.log('****Speed in miles is****');
+// console.log(polo.speedUS); // 140 / 1.6
+
+// polo.speedUS = 125;
+// console.log('****New speed set****');
+// console.log(polo); // 125 * 1.6
+
+// function diamond(n) {
+//   if (n % 2 == 0 || n <= 0) return null;
+//   let answerStr = '';
+//   for (let i = 1; i <= n; i += 2) {
+//     answerStr += `${' '.repeat((n - i) / 2) + '*'.repeat(i)}\n`;
+//   }
+//   for (let i = n - 2; i >= 1; i -= 2) {
+//     answerStr += `${' '.repeat((n - i) / 2) + '*'.repeat(i)}\n`;
+//   }
+//   return answerStr;
+// }
+
+// const readline = require('readline');
+
+// const rl = readline.createInterface({
+//     input: process.stdin,
+//     output: process.stdout
+// });
+
+// rl.on('line', (line) => {
+//     var nums = line.split(' ');
+//     var firstDice = parseInt(nums[0]);
+//     var secondDice = parseInt(nums[1]);
+//     /*Solve the test case and output the answer*/
+// });
+
+//create new array
+
+//n2 complexity
+function calculatePossibleRolls(firstDice, secondDice) {
+  let rollsArr = [];
+  for (let i = 1; i <= firstDice; i++) {
+    for (let j = 1; j <= secondDice; j++) {
+      rollsArr.push(i + j);
+    }
+  }
+  return rollsArr;
+}
+
+//yes it is from slackOverflow.
+//It is the best solution for this problem that I know, I've used it before and will use it again.
+function occurrencesCounter(arr) {
+  let a = [],
+    b = [],
+    prev;
+
+  let sortedArr = arr.slice().sort();
+  for (let i = 0; i < sortedArr.length; i++) {
+    if (sortedArr[i] !== prev) {
+      a.push(sortedArr[i]);
+      b.push(1);
+    } else {
+      b[b.length - 1]++;
+    }
+    prev = sortedArr[i];
+  }
+  return [a, b];
+}
+
+function findMax(arr) {
+  let max = 0; //safe to initialize as 0, considering dice rolls are always > 0
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+  }
+  return max;
+}
+
+const rollsArr = calculatePossibleRolls(6, 4);
+const resultArrays = occurrencesCounter(rollsArr);
+console.log('[' + resultArrays[0] + ']', '[' + resultArrays[1] + ']');
+
+const max = findMax(resultArrays[1]);
+console.log(max);
+
+//[10,2,3,4,5,6,7,8,9] [1,1,2,3,4,4,4,3,2]
+
+//add to new array every element that has the max count
+let result = [];
+for (let i = 0; i < resultArrays[1]; i++) {
+  if (resultArrays[1][i] === max) {
+    result.push(resultArrays[0][i]);
+  }
+}
+result.sort();
+
+//sort and return array.
+
+//OR new object. explore possibilities later
+
+//possibility 1: get all possibilities + foo occurrences counting
+//possibility 2: get all possibilities + reduce counting each occurrence
+//possibility 3: get object with all possibilities for dices between 1 and 20
