@@ -266,6 +266,8 @@ GOOD LUCK 😀
 
 //n2 complexity
 
+////////////////////////////Exercise 1
+
 // const readline = require('readline');
 
 // function calculatePossibleRolls(firstDice, secondDice) {
@@ -362,29 +364,18 @@ GOOD LUCK 😀
 //a time complexity of O(n). Downside is that it would have a worse space-complexity as it'd require memory to store the map object created.
 //The idea is that, in case you had to calculate the result for 2 different dices 1000 times every  it would take a long time to calculate it, but th
 
-// 3
-// SET 0
-// CLEAR 1
-// AND 2 2
-// 6
-// SET 31
-// SET 30
-// CLEAR 29
-// AND 29 30
-// OR 29 30
-// AND 30 28
-// 0
+////////////////////////////Exercise 2
 
-//??????????????????????????????01
-//1?1?????????????????????????????
+const readline = require('readline');
 
-//read input
-let exampleInput =
-  '3\nSET 0\nCLEAR 1\nAND 2 2\n6\nSET 31\nSET 30\nCLEAR 29\nAND 29 30\nOR 29 30\nAND 30 28\n0';
-let inputArr = exampleInput.split('\n');
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
-//"3", "SET 0", "CLEAR 1", "AND 2 2",
-//"6", "SET 31", "SET 30", "CLEAR 29", "AND 29 30", "OR 29 30", "AND 30 28", "0"]
+// let exampleInput =
+//   '3\nSET 0\nCLEAR 1\nAND 2 2\n6\nSET 31\nSET 30\nCLEAR 29\nAND 29 30\nOR 29 30\nAND 30 28\n0';
+// let inputArr = exampleInput.split('\n');
 
 //breaks inputArr into sequences
 function inputToSequences(inputArr) {
@@ -457,27 +448,9 @@ function booleanMultiplyBits(bitArr, i, j) {
   }
 }
 
-let sequencesArr = inputToSequences(inputArr); //Array with multiple sequences of instructions
-let bitsArrays = createBitsStrings(sequencesArr);
-console.log(sequencesArr);
-console.log(bitsArrays);
-
-// clearBit(bitsArrays[0], 0);
-// setBit(bitsArrays[0], 1);
-// booleanSumBits(bitsArrays[0], 1, 0);
-// booleanMultiplyBits(bitsArrays[0], 1, 2);
-// questionMarkBit(bitsArrays[0], 0);
-console.log(bitsArrays[0]);
-
-//now I want to execute each sequence.
-console.log(sequencesArr[0]);
-
-let instructionsSequence = sequencesArr[0];
-// console.log(instructionSequence);
-
 function applyInstruction(instruction, bitArr) {
   let instructionParts = instruction.split(' ');
-  console.log(instructionParts);
+  // console.log(instructionParts);
   if (instructionParts[0] === 'SET') {
     setBit(bitArr, parseInt(instructionParts[1]));
   } else if (instructionParts[0] === 'CLEAR') {
@@ -491,7 +464,45 @@ function applyInstruction(instruction, bitArr) {
   }
 }
 
-//recognize end of input with 0
+function executeInstructionSequence(instructionSequence, bitSequence) {
+  for (let i = 0; i < instructionSequence.length; i++) {
+    applyInstruction(instructionSequence[i], bitSequence);
+  }
+}
+
+function runInstructrions(sequencesArr, bitsArrays) {
+  for (let i = 0; i < sequencesArr.length; i++) {
+    executeInstructionSequence(sequencesArr[i], bitsArrays[i]);
+  }
+}
+
+function printToConsole(bitsArrays) {
+  bitsArrays.forEach(arr => {
+    console.log(arr.join(''));
+  });
+}
+
+// let sequencesArr = inputToSequences(inputArr); //Array with multiple sequences of instructions
+// let bitsArrays = createBitsStrings(sequencesArr);
+// runInstructrions(sequencesArr, bitsArrays);
+// printToConsole(bitsArrays);
+
+rl.on('line', line => {
+  console.log('line input is:');
+  console.log(line);
+  console.log('');
+
+  // let inputArr = line.split('\n');
+  // console.log(inputArr);
+  // let sequencesArr = inputToSequences(inputArr); //Array with multiple sequences of instructions
+  // let bitsArrays = createBitsStrings(sequencesArr);
+  // runInstructrions(sequencesArr, bitsArrays);
+  // printToConsole(bitsArrays);
+});
+
+//Exercise 2 reminders:
+//create Data Structure mini flowchart to help understand variables and transformation flow.
+//verify that the input is ending correctly.
 
 //Reminders:
 //Exercise 1:
