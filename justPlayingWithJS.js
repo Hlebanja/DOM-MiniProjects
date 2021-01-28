@@ -277,25 +277,26 @@ GOOD LUCK 😀
 //       rollsArr.push(i + j);
 //     }
 //   }
-//   return rollsArr;
+//   return rollsArr; //array with the sums of all different combinations of rolls (for the two dice provided).
 // }
 
 // function occurrencesCounter(arr) {
-//   let rolls = [], //contain possible rolls
-//     occurrences = [], //contain, respectively, occurrences count
+//   //given any input array, this function calculates the number of occurrences of each element.
+//   let elementsSet = [], //contain (unique) set of elements.
+//     occurrences = [], //contain, respectively, occurrences count of each element of the set.
 //     prev;
 
-//   let sortedArr = arr.slice().sort(); //slice().sort() as not to mutate original array
+//   let sortedArr = arr.slice().sort(); //slice().sort() as not to mutate original array.
 //   for (let i = 0; i < sortedArr.length; i++) {
 //     if (sortedArr[i] !== prev) {
-//       rolls.push(sortedArr[i]);
+//       elementsSet.push(sortedArr[i]);
 //       occurrences.push(1);
 //     } else {
 //       occurrences[occurrences.length - 1]++;
 //     }
 //     prev = sortedArr[i];
 //   }
-//   return [rolls, occurrences];
+//   return [elementsSet, occurrences];
 // }
 
 // function findMaxOccurrences(arr) {
@@ -338,31 +339,34 @@ GOOD LUCK 😀
 //   const rollsArr = calculatePossibleRolls(firstDice, secondDice);
 //   const resultArrays = occurrencesCounter(rollsArr);
 
-//   //to help you understand what the resultArrays is:
-//   // console.log('[' + resultArrays[0] + ']', '[' + resultArrays[1] + ']');
+//   //To test what the resultArrays is. This comment can be deleted at any time.
+//   //console.log('[' + resultArrays[0] + ']', '[' + resultArrays[1] + ']');
 
 //   const max = findMaxOccurrences(resultArrays[1]);
 //   const result = createResultOutput(resultArrays, max);
 //   printResults(result);
 // });
 
-//If you had to calculate the most probable dice roll for, say, 1000 dice rolls per second
-//an alternative solution can be proposed.
+//A possible solution extension - and I am unsure if this would be of any benefit:
 
-//Alternative (crazy) solution:
-//create map() collection with all combinations of faced dices between 4 and 20 as keys.
+//If you had to calculate the most probable dice roll for, say, 1000 dice rolls per second
+//an extension of this solution can be proposed.
+
+//create a map() collection with all combinations of faced dices between 4 and 20 as keys.
 //for each combination of dices, the most probable roll result would be calculated and stored as values.
 //Keys: arrays with 2 elements, each element the dices' number of faces.
-//respective values: array with the result (most probable rolls) of those two specific dices.
+//Values: array with the result (most probable rolls in ascending order) of those two specific dices.
 
 //It would require a lot of calculation once,
 //but once you had the map object with all possible combinations and results,
-//it would be faster to find the result then to calculate individually each time
-//the possibilities and result for each combination of dices.
+//for new rolls it would require *less processing* to query the result in the map object
+//then to calculate individually the whole process for each user input.
 
-//Then, to search for the result of 2 dices it would be a simple search on the object, and therefore would have
-//a time complexity of O(n). Downside is that it would have a worse space-complexity as it'd require memory to store the map object created.
-//The idea is that, in case you had to calculate the result for 2 different dices 1000 times every  it would take a long time to calculate it, but th
+//Then, to search for the result of 2 dices it would be a simple search on the object.
+//This would simly avoid having to perform all calculations in the process repeatedly.
+//Downside is that it would have a worse space-complexity as it'd require memory to store the map object created.
+
+//Time complexity of the two solutions seem to be the same.
 
 ////////////////////////////Exercise 2
 
@@ -373,12 +377,14 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
+//Example input for testing purposes, used on the early stages of this code. To be deleted.
 // let exampleInput =
 //   '3\nSET 0\nCLEAR 1\nAND 2 2\n6\nSET 31\nSET 30\nCLEAR 29\nAND 29 30\nOR 29 30\nAND 30 28\n0';
 // let inputArr = exampleInput.split('\n');
 
-//breaks inputArr into sequences
 function inputToSequences(inputArr) {
+  //breaks inputArr into sub arrays, each containing a instruction sequence
+  //store the instruction sequences into sequencesArr
   let sequencesArr = [];
   for (let i = 0; i < inputArr.length; i++) {
     let sequenceStart = Number(inputArr[i]);
@@ -402,8 +408,8 @@ function inputToSequences(inputArr) {
   return sequencesArr;
 }
 
-//create strings based on sequencesArr
 function createBitsStrings(sequencesArr) {
+  //create strings based on sequencesArr
   let bitsArrays = [];
   for (let i = 0; i < sequencesArr.length; i++) {
     bitsArrays.push('????????????????????????????????'.split(''));
@@ -482,29 +488,26 @@ function printToConsole(bitsArrays) {
   });
 }
 
-// let sequencesArr = inputToSequences(inputArr); //Array with multiple sequences of instructions
-// let bitsArrays = createBitsStrings(sequencesArr);
-// runInstructrions(sequencesArr, bitsArrays);
-// printToConsole(bitsArrays);
-
+let inputArr = [];
 rl.on('line', line => {
-  console.log('line input is:');
-  console.log(line);
-  console.log('');
-
-  // let inputArr = line.split('\n');
-  // console.log(inputArr);
-  // let sequencesArr = inputToSequences(inputArr); //Array with multiple sequences of instructions
-  // let bitsArrays = createBitsStrings(sequencesArr);
-  // runInstructrions(sequencesArr, bitsArrays);
-  // printToConsole(bitsArrays);
+  inputArr.push(line);
+  if (line === '0') {
+    let sequencesArr = inputToSequences(inputArr); //Array with multiple sequences of instructions
+    let bitsArrays = createBitsStrings(sequencesArr);
+    runInstructrions(sequencesArr, bitsArrays);
+    printToConsole(bitsArrays);
+  } else {
+  }
 });
+
+//Brief explanation of variables and the flow of this solution:
+//inputArr: array containing console inputs. Each element is an inputed line.
+
+//Then, the inputArr is broken down into sub arrays - each sub array containing a instruction sequences.
+//for example, ["3", "Set 0", "Clear 1", "AND 0 1"] is a valid insruction sequence.
+//Each instruction sequence is stored on an array called sequencesArr.
+
+//For each instruction sequence in sequencesArr, it is created a corresponding string representing the 32-bits.
 
 //Exercise 2 reminders:
 //create Data Structure mini flowchart to help understand variables and transformation flow.
-//verify that the input is ending correctly.
-
-//Reminders:
-//Exercise 1:
-//change naming arr for something better
-//write comments for the whole thing
